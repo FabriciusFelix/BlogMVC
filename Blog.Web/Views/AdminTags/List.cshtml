@@ -23,22 +23,31 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                    <form method="post">
                     <tr>
                         <td>@item.Id </td>
                         <td>@item.Name  </td>
                         <td>@item.DisplayName  </td>
                         <td>
-                            <a asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">Edit</a>  
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            
+                                <a asp-controller="AdminTags" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                           
+                            <button class="btn btn-warning" type="submit"
+                                asp-area=""
+                                asp-route-id="@item.Id"
+                                asp-controller="AdminTags"
+                                asp-action="Delete">
+                                Delete
+                            </button>
                         </td>
                     </tr>
+                    </form>
                 }
-         </tbody>
+            </tbody>
         </table>
     }
     else
     {
         <a>No Tags Found! </a>
     }
- </div>
-    
+</div>

@@ -35,8 +35,13 @@
                                        asp-controller="AdminTags"
                                        asp-action="List">Show All Tags</a>
                                 </li>
-                                
-                                
+                                <li>
+                                    <a class="dropdown-item" asp-area=""
+                                       asp-controller="AdminBlogPosts"
+                                       asp-action="Add">Add Blog Post</a>
+                                </li>
+
+
                             </ul>
                         </li>
                     </ul>
@@ -61,4 +66,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
