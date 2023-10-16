@@ -19,11 +19,17 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Content</label>
-            <input type="text" class="form-control" id="content" asp-for="Content" />
+            <textarea class="form-control" id="content" asp-for="Content"></textarea>
         </div>
         <div class="mb-3">
             <label class="form-label">Short Description</label>
             <input type="text" class="form-control" id="shortDescription" asp-for="ShortDescription" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Featured Image Upload</label>
+            <input type="file" class="form-control" id="featuredImageUpload" asp-for="FeaturedImageUpload" />
+
+            <img src="" id="featuredImageDisplay" style="display:none; width: 300px;"/>
         </div>
         <div class="mb-3">
             <label class="form-label">Featured Image URL</label>
@@ -60,3 +66,95 @@
         </div>
     </form>
 </div>
+
+@section Scripts{
+    <script>
+        var editor = new FroalaEditor('#content' ,{
+            imageUploadURL: '/api/images'
+        });
+        const featuredImageUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageURLElement = document.getElementById('featuredImageUrl');
+        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+        async function uploadFeaturedImage(e){
+            console.log(e.target.files[0]);
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/images',{
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*',
+                },
+                body:data
+            }).then(response => response.json())
+              .then(result => {
+                 // console.log(result);
+                    featuredImageURLElement.value = result.link;
+                    featuredImageDisplayElement.src = result.link;
+                    featuredImageDisplayElement.style.display = 'block';
+              });
+        }
+
+        featuredImageUploadElement.addEventListener('change', uploadFeaturedImage);
+        // Obtenha a referência ao elemento de input de data
+        var publishedDateInput = document.getElementById("publishedDate");
+
+        // Crie uma nova data para a data atual
+        var currentDate = new Date();
+
+        // Formate a data para o formato YYYY-MM-DD, que é o formato esperado pelo input type="date"
+        var formattedDate = currentDate.toISOString().slice(0, 10);
+
+        // Defina o valor do campo de data para a data atual formatada
+        publishedDateInput.value = formattedDate;
+    </script>
+}
+
+  @{
+       
+//    async function uploadFeaturedImage(e)
+//    {
+//        // A função é declarada com a palavra-chave 'async', o que a torna assíncrona.
+//        // Ela recebe um único parâmetro 'e', que geralmente é um evento (como um evento de input de arquivo).
+
+//        console.log(e.target.files[0]);
+//        // Aqui, estamos registrando no console o primeiro arquivo selecionado no input de arquivo
+//        // associado ao evento 'e'. O evento 'e' geralmente contém informações sobre a interação do usuário.
+
+//        let data = new FormData();
+//        // Criamos uma nova instância de FormData, um objeto usado para construir dados de formulário.
+//        // FormData é frequentemente usado para enviar dados de formulário para o servidor.
+
+//        data.append('file', e.target.files[0]);
+//        // Usamos o método 'append' do objeto FormData para adicionar o arquivo selecionado ao formulário.
+//        // O primeiro argumento é o nome do campo (neste caso, 'file'), e o segundo argumento é o arquivo selecionado.
+
+//        await fetch('/api/images', {
+//        method: 'POST',
+//        headers:
+//            {
+//                'Accept': '*/*',
+//        },
+//        body: data
+//    })
+//    // Usamos o comando 'await' para esperar que a operação de busca (fetch) seja concluída.
+//    // A função 'fetch' é usada para fazer uma requisição HTTP para o servidor.
+
+//    .then(response => response.json())
+//    // Uma vez que a requisição é feita, estamos encadeando uma chamada para processar a resposta.
+//    // Aqui, estamos esperando que a resposta seja convertida para JSON.
+
+//    .then(result => {
+//        console.log(result);
+//    });
+//    // Quando a resposta for convertida para JSON, estamos registrando o resultado no console.
+//}
+
+}
+
+
+
+
+
+

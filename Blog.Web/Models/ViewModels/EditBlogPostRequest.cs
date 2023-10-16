@@ -1,6 +1,8 @@
-﻿namespace Blog.Web.Models.Domain
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace Blog.Web.Models.ViewModels
 {
-    public class BlogPost
+    public class EditBlogPostRequest
     {
         public Guid Id { get; set; }
         public string Heading { get; set; }
@@ -8,12 +10,16 @@
         public string Content { get; set; }
         public string ShortDescription { get; set; }
         public string FeaturedImageUrl { get; set; }
+        public string FeaturedImageUpload { get; set; }
         public string UrlHandle { get; set; }
         public DateTime PublishDate { get; set; }
         public string Author { get; set; }
         public bool Visible { get; set; }
 
-        //Navigation property
-        public ICollection<Tag> Tags { get; set; }
+        //display tags
+
+        public IEnumerable<SelectListItem> Tags { get; set; }
+        //Collect tags capt
+        public string[] SelectedTags { get; set; } = Array.Empty<string>();
     }
 }

@@ -24,3 +24,7 @@ body {
     background-color:black;
     text-decoration-color:revert;
 }
+
+.blog-details-content img{
+    max-width: 100%;
+}
