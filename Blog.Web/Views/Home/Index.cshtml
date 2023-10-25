@@ -1,4 +1,4 @@
-﻿@model List<Blog.Web.Models.Domain.BlogPost>
+﻿@model Blog.Web.Models.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -18,17 +18,36 @@
         <div class="col-12 col-lg-6">
             <img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
             alt="Fx-Blog Dev Blogs"
-            class="d-block mx-lg-auto img-fluid" width="300px"/>
+            class="d-block mx-lg-auto img-fluid" width="300"/>
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-6">
-            @if (Model != null && Model.Any())
+        <div class="col-6 d-flex mb-5">
+            @if(Model != null && Model.Tags.Any())
             {
-                foreach(var blogPost in Model)
+                foreach(var tag in Model.Tags)
+                {
+                    <span class="badge bg-dark me-1">
+                        @tag.Name
+                    </span>
+                }
+            }
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (Model != null && Model.BlogPosts.Any())
+            {
+                foreach(var blogPost in Model.BlogPosts)
                 {
                     <div class="mb-5 bg-opacity-100 box-shadow p-2">
                         <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" border="0"
