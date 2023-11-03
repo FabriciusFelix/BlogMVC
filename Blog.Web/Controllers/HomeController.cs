@@ -19,7 +19,7 @@ namespace Blog.Web.Controllers
             _blogPostRepository = blogPostRepository;
             _tagRepository = tagRepository;
         }
-
+        
         public async Task<IActionResult> Index()
         {
             var blogPosts = await _blogPostRepository.GetAllAsync();

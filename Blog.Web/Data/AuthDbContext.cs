@@ -21,8 +21,8 @@ namespace Blog.Web.Data
             var roles = new List<IdentityRole> { 
                 new IdentityRole
                 {
-                    Name = "admin",
-                    NormalizedName = "admin",
+                    Name = "Admin",
+                    NormalizedName = "Admin",
                     Id = adminRoleId,
                     ConcurrencyStamp = adminRoleId
                 },

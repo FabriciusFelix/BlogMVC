@@ -3,11 +3,13 @@ using Blog.Web.Data;
 using Blog.Web.Models.Domain;
 using Blog.Web.Models.ViewModels;
 using Blog.Web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminTagsController : Controller
     {
         private readonly BlogDbContext _dbContext;
@@ -17,12 +19,14 @@ namespace Blog.Web.Controllers
             _dbContext = dbContext;
             _tagRepository = tagInterface;
         }
+        
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
+        
         [HttpPost]
         [ActionName("Add")]
         public async Task<IActionResult> Add(AddTagRequest addTagRequest)
@@ -40,6 +44,7 @@ namespace Blog.Web.Controllers
             return RedirectToAction("List");
         }
 
+        
         [HttpGet]
         [ActionName("List")]
         public async Task<IActionResult> List()
@@ -47,7 +52,7 @@ namespace Blog.Web.Controllers
             var list = await _tagRepository.GetAllAsync();
             return View(list);
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -70,6 +75,7 @@ namespace Blog.Web.Controllers
 
 
         }
+        
         [HttpPost]
         public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
@@ -91,6 +97,8 @@ namespace Blog.Web.Controllers
                 return RedirectToAction("Edit", new { id = editTagRequest.Id });
             }
         }
+
+        
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
         {
